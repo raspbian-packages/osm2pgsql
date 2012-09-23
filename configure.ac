@@ -93,5 +93,5 @@ AX_PTHREAD(,[AC_MSG_ERROR([no])])
 
 
 dnl Generate Makefile
-AC_OUTPUT(Makefile legacy/Makefile gazetteer/Makefile)
+AC_OUTPUT(Makefile legacy/Makefile)
 
