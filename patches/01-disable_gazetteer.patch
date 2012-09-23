@@ -1,0 +1,29 @@
+From: David Paleino <dapal@debian.org>
+Subject: disable Gazetteer build
+Forwarded: not-needed
+
+---
+ Makefile.am  |    3 +--
+ configure.ac |    2 +-
+ 2 files changed, 2 insertions(+), 3 deletions(-)
+
+--- osm2pgsql.orig/Makefile.am
++++ osm2pgsql/Makefile.am
+@@ -1,7 +1,6 @@
+ ACLOCAL_AMFLAGS = -I m4
+ 
+-DIST_SUBDIRS = legacy gazetteer
+-SUBDIRS = $(GAZETTEER_SUBDIR)
++DIST_SUBDIRS = legacy
+ 
+ bin_PROGRAMS = osm2pgsql
+ 
+--- osm2pgsql.orig/configure.ac
++++ osm2pgsql/configure.ac
+@@ -93,5 +93,5 @@ AX_PTHREAD(,[AC_MSG_ERROR([no])])
+ 
+ 
+ dnl Generate Makefile
+-AC_OUTPUT(Makefile legacy/Makefile gazetteer/Makefile)
++AC_OUTPUT(Makefile legacy/Makefile)
+ 
