@@ -32,7 +32,7 @@
    "CREATE TABLE place ("                       \
    "  place_id BIGINT,"                         \
    "  osm_type CHAR(1) NOT NULL,"               \
-   "  osm_id BIGINT NOT NULL,"                  \
+   "  osm_id " POSTGRES_OSMID_TYPE " NOT NULL," \
    "  class TEXT NOT NULL,"                     \
    "  type TEXT NOT NULL,"                      \
    "  name keyvalue[],"                         \
@@ -51,7 +51,7 @@
 #define V2_CREATE_PLACE_TABLE                   \
    "CREATE TABLE place ("                       \
    "  osm_type CHAR(1) NOT NULL,"               \
-   "  osm_id BIGINT NOT NULL,"                  \
+   "  osm_id " POSTGRES_OSMID_TYPE " NOT NULL," \
    "  class TEXT NOT NULL,"                     \
    "  type TEXT NOT NULL,"                      \
    "  name HSTORE,"                             \
