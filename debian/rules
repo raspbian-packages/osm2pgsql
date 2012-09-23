@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+# debian/rules for osm2pgsql  
+#
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+SVNREPO := http://svn.openstreetmap.org/applications/utils/export/osm2pgsql
+VERSION := $(shell dpkg-parsechangelog | grep Version | cut -d' ' -f2)
+UPVER   := $(shell echo $(VERSION) | awk -F'+r' '{print $$1}')
+SVNREV  := $(shell echo $(VERSION) | awk -F'+r' '{print $$2}' | cut -d- -f1)
+SUFFIX  := +r$(SVNREV)
+
+%:
+	dh $@ \
+		--with autoreconf
+
+override_dh_compress:
+	# clean up some naive file permissions
+	#-find $(CURDIR)/gazetteer/website -type f -exec chmod a-x {} \;
+	dh_compress -X.php -X.sql -X.js -X.c -X.h
+
+get-orig-source:
+	@echo Downloading osm2pgsql from ${SVNREPO}
+	svn export -r ${SVNREV} ${SVNREPO} osm2pgsql-${UPVER}${SUFFIX}/
+	@echo Removing gazetteer.
+	rm -rf osm2pgsql-${UPVER}${SUFFIX}/gazetteer/
+	@echo Removing debian/ directory
+	rm -rf osm2pgsql-${UPVER}${SUFFIX}/debian/
+	@echo Building snapshot tarball.
+	tar czvf osm2pgsql_${UPVER}${SUFFIX}.orig.tar.gz osm2pgsql-${UPVER}${SUFFIX}
+	@echo Cleaning up
+	rm -rf osm2pgsql-${UPVER}${SUFFIX}
+	@echo .
+	@echo To update debian/changelog type
+	@echo dch -v ${UPVER}${SUFFIX}-1
+	@echo .
+

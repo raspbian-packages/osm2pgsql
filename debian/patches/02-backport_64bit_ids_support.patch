@@ -1,0 +1,43 @@
+From: David Paleino <dapal@debian.org>
+Subject: backport support for 64-bit IDs
+Forwarded: not-needed
+Origin: vendor
+Bug-Debian: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=687965
+
+---
+ osmtypes.h         |    3 +--
+ output-gazetteer.c |    4 ++--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+--- osm2pgsql.orig/osmtypes.h
++++ osm2pgsql/osmtypes.h
+@@ -6,8 +6,7 @@
+ #include <inttypes.h>
+ #include <time.h>
+ 
+-// uncomment the following to build a version that supports 64bit IDs.
+-// #define OSMID64
++#define OSMID64
+ 
+ #ifdef OSMID64
+ typedef int64_t osmid_t;
+--- osm2pgsql.orig/output-gazetteer.c
++++ osm2pgsql/output-gazetteer.c
+@@ -32,7 +32,7 @@
+    "CREATE TABLE place ("                       \
+    "  place_id BIGINT,"                         \
+    "  osm_type CHAR(1) NOT NULL,"               \
+-   "  osm_id BIGINT NOT NULL,"                  \
++   "  osm_id " POSTGRES_OSMID_TYPE " NOT NULL," \
+    "  class TEXT NOT NULL,"                     \
+    "  type TEXT NOT NULL,"                      \
+    "  name keyvalue[],"                         \
+@@ -51,7 +51,7 @@
+ #define V2_CREATE_PLACE_TABLE                   \
+    "CREATE TABLE place ("                       \
+    "  osm_type CHAR(1) NOT NULL,"               \
+-   "  osm_id BIGINT NOT NULL,"                  \
++   "  osm_id " POSTGRES_OSMID_TYPE " NOT NULL," \
+    "  class TEXT NOT NULL,"                     \
+    "  type TEXT NOT NULL,"                      \
+    "  name HSTORE,"                             \

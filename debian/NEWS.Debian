@@ -1,0 +1,20 @@
+osm2pgsql (0.80.0+r27899-4) unstable; urgency=low
+
+  Since version 0.80.0+r27899-3, osm2pgsql supports 64-bit OSM IDs. This
+  means that the column "osm_id" in created tables changed its type from
+  INTEGER (int4) to BIGINT (int8). This change will allow storing new
+  OSM objects, as the OSM database gets larger.
+
+  Databases created before this version should be migrated. Remember to do
+  a BACKUP before attempting anything.
+
+  You can either recreate the database from scratch using osm2pgsql, or
+  issue the following SQL statement on each table containing a osm_id
+  column:
+
+    ALTER TABLE <table> COLUMN osm_id TYPE bigint;
+
+  Remember to make PROPER BACKUPS before attempting any such operation on
+  your database.
+
+ -- David Paleino <dapal@debian.org>  Sun, 23 Sep 2012 21:52:38 +0200
