@@ -1,0 +1,21 @@
+#!/usr/bin/make -f
+# debian/rules for osm2pgsql  
+#
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+CFLAGS += $(CPPFLAGS)
+CXXFLAGS += $(CPPFLAGS)
+
+%:
+	dh $@ \
+		--with autoreconf \
+		--parallel
+
+override_dh_auto_configure:
+	dh_auto_configure -- CFLAGS="$(CFLAGS)" CPPFLAGS="$(CPPFLAGS)" CXXFLAGS="$(CXXFLAGS)"
+
+override_dh_compress:
+	# clean up some naive file permissions
+	dh_compress -X.php -X.sql -X.js -X.c -X.h
+

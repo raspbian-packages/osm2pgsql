@@ -1,0 +1,2 @@
+version=3
+https://github.com/openstreetmap/osm2pgsql/tags .*/v*(\d[\d\.]+)\.tar\.gz
