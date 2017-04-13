@@ -1,0 +1,27 @@
+Description: Use the same logic for queuing pending ways with multi and pgsql
+ Fixes ways disappearing from the output table.
+Author: Paul Norman <penorman@mac.com>
+Origin: https://github.com/openstreetmap/osm2pgsql/commit/8ffe16e67da43fd531a5e73b10d31465324f4a91
+Bug: https://github.com/openstreetmap/osm2pgsql/issues/735
+Bug-Debian: https://bugs.debian.org/860273
+
+--- a/output-multi.cpp
++++ b/output-multi.cpp
+@@ -92,7 +92,7 @@ void output_multi_t::enqueue_ways(pendin
+     }
+ 
+     //make sure to get this one as well and move to the next
+-    if(popped == id) {
++    if (popped > id) {
+         if (!ways_done_tracker->is_marked(popped) && id_tracker::is_valid(popped)) {
+             job_queue.push(pending_job_t(popped, output_id));
+             added++;
+@@ -143,7 +143,7 @@ void output_multi_t::enqueue_relations(p
+     }
+ 
+     //make sure to get this one as well and move to the next
+-    if(popped == id) {
++    if (popped > id) {
+         if(id_tracker::is_valid(popped)) {
+             job_queue.push(pending_job_t(popped, output_id));
+             added++;

@@ -1,0 +1,20 @@
+Description: ignore relations with more than 32k members
+ There is a hard restriction in the pgsql middle tables, where
+ relation members are indexed using a smallint. To remain
+ consistent, drop all relations which exceed this size.
+Author: Sarah Hoffmann <lonvia@denofr.de>
+Origin: https://github.com/openstreetmap/osm2pgsql/commit/ec9c84edbcbd0dafab6d6c30290083e75c023890
+Bug: https://github.com/openstreetmap/osm2pgsql/issues/713
+
+--- a/parse-osmium.cpp
++++ b/parse-osmium.cpp
+@@ -176,6 +176,9 @@ void parse_osmium_t::relation(osmium::Re
+     if (rel.deleted()) {
+         m_data->relation_delete(rel.id());
+     } else {
++        if (rel.members().size() > 32767) {
++            return;
++        }
+         convert_tags(rel);
+         convert_members(rel.members());
+         if (m_append) {
