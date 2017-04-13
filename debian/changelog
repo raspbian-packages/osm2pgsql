@@ -1,0 +1,420 @@
+osm2pgsql (0.92.0+ds-2) unstable; urgency=medium
+
+  * Add upstream patches from 0.92.x branch to fix two important issues:
+    - Ignore relations with more than 32k members.
+      There is a hard restriction in the pgsql middle tables, where
+      relation members are indexed using a smallint. To remain
+      consistent, drop all relations which exceed this size.
+      https://github.com/openstreetmap/osm2pgsql/issues/713
+    - Use the same logic for queuing pending ways with multi and pgsql.
+      Fixes ways disappearing from the output table.
+      https://github.com/openstreetmap/osm2pgsql/issues/735
+    (closes: #860273)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 13 Apr 2017 23:00:11 +0200
+
+osm2pgsql (0.92.0+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 16 Dec 2016 11:34:24 +0100
+
+osm2pgsql (0.92.0~rc1+ds-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Add license & copyright for test_output_pgsql_validgeom.osm.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 08 Dec 2016 00:17:36 +0100
+
+osm2pgsql (0.90.1+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop patches, included upstream.
+  * Drop TODO from docs, removed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 17 Jul 2016 13:38:11 +0200
+
+osm2pgsql (0.90.0+ds-3) unstable; urgency=medium
+
+  * Bump Standards-Version to 3.9.8, no changes.
+  * Drop unused override for spelling error false positive.
+  * Add upstream patch to fix projection info for generic projection.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 05 May 2016 22:07:00 +0200
+
+osm2pgsql (0.90.0+ds-2) unstable; urgency=medium
+
+  * Enable all hardening buildflags.
+  * Add upstream patch to fix segfault due to null pointers in error messages.
+    (closes: #819713)
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 Apr 2016 23:21:43 +0200
+
+osm2pgsql (0.90.0+ds-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop clean file, protobuf files no longer (re)generated.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 02 Mar 2016 18:48:55 +0100
+
+osm2pgsql (0.90.0~rc1+ds-1~exp1) experimental; urgency=medium
+
+  * New upstream release candidate.
+  * Update Vcs-Git URL to use HTTPS.
+  * Update Homepage & Donation URLs to use HTTPS.
+  * Switch to CMake buildsystem.
+  * Update build dependencies:
+    - Drop libboost-thread-dev, libxml2-dev & protobuf dependencies
+    - Add libexpat1-dev & libosmium2-dev
+  * Repack upstream tarball to exclude embedded copy of libosmium.
+  * Update copyright file, changes:
+    - Drop license & copyright for geos-fallback, no longer included
+    - Drop © character from copyright statements
+  * Bump Standards-Version to 3.9.7, no changes.
+  * Override dh_install to use --list-missing.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 27 Feb 2016 16:23:37 +0100
+
+osm2pgsql (0.88.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update watch file to handle other tar extensions.
+  * Update Vcs-Browser URL to use HTTPS.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 28 Aug 2015 11:51:55 +0200
+
+osm2pgsql (0.88.0-1) unstable; urgency=medium
+
+  * Fix filenamemangle in watch file for non pre-releases.
+  * New upstream release.
+  * Add lintian override for spelling-error-in-binary false positive.
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Wed, 15 Jul 2015 08:05:18 +0200
+
+osm2pgsql (0.88.0~rc1-1~exp1) experimental; urgency=medium
+
+  * Support pre-releases in watch file.
+  * New upstream release candidate.
+  * Add additional contributors to copyright file.
+  * Also include CONTRIBUTING.md in docs.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 11 Jul 2015 10:31:41 +0200
+
+osm2pgsql (0.87.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Update copyright file, changes:
+    - Drop license & copyright for rb.{c,h}pp, removed upstream.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Mon, 06 Jul 2015 08:37:56 +0200
+
+osm2pgsql (0.87.3-3) unstable; urgency=medium
+
+  * Use --without-lockfree configure option on problematic architectures,
+    still required despite upstream claims.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Fri, 01 May 2015 11:22:39 +0200
+
+osm2pgsql (0.87.3-2) unstable; urgency=medium
+
+  * Drop --without-lockfree configure option, no longer needed.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Apr 2015 23:56:01 +0200
+
+osm2pgsql (0.87.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Change Upstream-Contact to OpenStreetMap Developers.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Thu, 30 Apr 2015 09:09:57 +0200
+
+osm2pgsql (0.87.2-1) unstable; urgency=medium
+
+  * Move from experimental to unstable.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sun, 26 Apr 2015 20:12:07 +0200
+
+osm2pgsql (0.87.2-1~exp3) experimental; urgency=medium
+
+  * Also use --without-lockfree configure option on sparc & alpha.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Sat, 07 Mar 2015 17:05:36 +0100
+
+osm2pgsql (0.87.2-1~exp2) experimental; urgency=medium
+
+  * Use --without-lockfree configure option only on architectures where the
+    build fails otherwise. The option introduces a performance penalty
+    undesirable on the primary architectures.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 24 Feb 2015 19:41:52 +0100
+
+osm2pgsql (0.87.2-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Use --without-lockfree configure option instead of patching the
+    source.
+  * Include additional documentation.
+  * Update my email to @debian.org address.
+
+ -- Bas Couwenberg <sebastic@debian.org>  Tue, 24 Feb 2015 09:11:40 +0100
+
+osm2pgsql (0.87.1-1~exp1) experimental; urgency=medium
+
+  * New upstream release.
+  * Update Vcs-Browser URL to use cgit instead of gitweb.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Tue, 30 Dec 2014 08:50:38 +0100
+
+osm2pgsql (0.87.0-1~exp2) experimental; urgency=medium
+
+  * Add patch to not use Boost lockfree queues even for Boost >= 1.53,
+    hopefully fixes the FTBFS on arm64, armel, powerpc, ppc64el & s390x.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Fri, 12 Dec 2014 01:38:00 +0100
+
+osm2pgsql (0.87.0-1~exp1) experimental; urgency=medium
+
+  * New upstream release. 
+  * Add upstream metadata.
+  * Update watch file to rename downloaded tarball.
+  * Add Boost build dependencies for C++ build.
+  * Enable verbose test output.
+  * Ignore test failures, some tests require a configured postgres
+    database.
+  * Update copyright file, changes:
+    - Add Upstream-Name header
+    - Update Files sections for C++ files
+    - Update Source URL to match watch file URL
+    - Fix geos-fallback license, GEOS uses LGPL-2.1+ not LGPL-3+
+    - Add Copyright & License for win_fsync.h
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 10 Dec 2014 20:13:03 +0100
+
+osm2pgsql (0.86.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Remove 00-fix_build.patch, applied upstream.
+  * Remove 01-hyphen-used-as-minus-sign.patch, applied upstream.
+  * Remove 02-spelling-error-in-manpage.patch, applied upstream.
+  * Remove 03-fix-build-for-protobuf-c-1.0.0.patch, applied upstream.
+  * Remove 04-api-changes-for-protobuf-c-1.0.0.patch, applied upstream.
+  * Add python build dependencies for updated regression test script.
+  * Update docs to install README.md.
+  * Bump Standards-Version to 3.9.6, no changes.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 25 Oct 2014 13:15:52 +0200
+
+osm2pgsql (0.84.0-3) unstable; urgency=medium
+
+  * Only recommend postgis, now that postgis recommends the postgresql
+    specific shared library.
+    (closes: #757972)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sun, 17 Aug 2014 15:11:05 +0200
+
+osm2pgsql (0.84.0-2) unstable; urgency=medium
+
+  * Add patches for protobuf-c 1.0.0 support.
+    Thanks to Robert Edmonds for the patches.
+    (closes: #755553)
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Sat, 26 Jul 2014 13:33:01 +0200
+
+osm2pgsql (0.84.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add myself to Uploaders.
+  * Update postgis Recommends to postgresql-9.3-postgis-2.1.
+    (closes: #732415)
+  * Add gbp.conf to use pristine-tar by default.
+  * Refresh patches.
+  * Drop get-orig-source target, upstream moved from OSM SVN to GitHub.
+  * Add build dependency on liblua5.2-dev and lua5.2.
+  * Append CPPFLAGS to CFLAGS & CXXFLAGS to use -D_FORTIFY_SOURCE=2.
+  * Add patch to fix hyphen-used-as-minus-sign warnings.
+  * Add patch to fix spelling-error-in-manpage warning.
+  * Bump Standards-Version to 3.9.5, no changes.
+  * Enable parallel builds.
+
+ -- Bas Couwenberg <sebastic@xs4all.nl>  Wed, 30 Apr 2014 13:05:29 +0200
+
+osm2pgsql (0.82.0-1) unstable; urgency=low
+
+  [ Andrew Harvey ]
+  * New SVN snapshot
+  * Patches refreshed to apply to new source
+  * Update debian/rules get-orig-source to not bother trying to remove the
+    gazetteer as it is no longer included upstream
+  * Update manpage
+  * Add debian/watch documenting the situation of the upstream version number
+
+  [ David Paleino ]
+  * Dropped 02-backport_64bit_ids_support.patch, no more needed
+  * Standards-Version bump to 3.9.4, no changes needed
+  * Removed Andreas Putzo and DMUA flag from debian/control
+
+  [ Andreas Tille ]
+  * New upstream version (adapted patch)
+  * Added watch file
+  * debian/control:
+     - Add myself as Uploader (and drop pkg-osm team)
+     - canonical URIs for Vcs fields
+     - cme fix dpkg-control
+     - debhelper 9
+  * debian/copyright:
+     - DEP5
+     - New Source location
+     - Added Upstream-Contact
+  * debian/manpages: Install manpages provided upstream
+  * debian/osm2pgsql.1: removed
+
+ -- Andreas Tille <tille@debian.org>  Tue, 17 Sep 2013 23:21:42 +0200
+
+osm2pgsql (0.80.0+r27899-3) unstable; urgency=low
+
+  * Update Recommends of postgresql-8.4-postgis to -9.1
+  * Backport support for 64-bit IDs (Closes: #687965)
+
+ -- David Paleino <dapal@debian.org>  Sun, 23 Sep 2012 09:14:15 +0200
+
+osm2pgsql (0.80.0+r27899-1) unstable; urgency=low
+
+  * New SVN snapshot
+  * Strip the debian/ directory from the SVN checkout
+  * Standards-Version bump to 3.9.3, no changes needed
+  * Updated debian/copyright
+  * Patches refreshed to apply to new source
+  * Switch build-dependency from libgeos-dev to libgeos++-dev
+
+ -- David Paleino <dapal@debian.org>  Sun, 26 Feb 2012 21:37:38 +0100
+
+osm2pgsql (0.70.5+r25090-2) unstable; urgency=low
+
+  * Fix Maintainer e-mail address
+
+ -- David Paleino <dapal@debian.org>  Wed, 19 Jan 2011 16:15:54 +0100
+
+osm2pgsql (0.70.5+r25090-1) unstable; urgency=low
+
+  * New SVN snapshot
+  * debian/control:
+    - fix Vcs-* fields to point to the git repository.
+    - added pkg-osm to Uploaders
+  * Bump Standards-Version to 3.9.1, no changes needed
+  * Use "3.0 (quilt)" format
+  * Removed useless dpatch machinery
+  * Use dh7 for debian/rules
+  * Improve get-orig-source target
+  * Wrapped multi-value fields in debian/control
+  * Bump debhelper compatibility to 8
+  * debian/docs updated
+  * Use new DebianGIS e-mail address
+  * Add Build-Dependencies on zlib, protobuf-c and dh-autoreconf
+  * Use DEP-5 for debian/copyright
+  * Clean protoc-generated files during the clean target
+  * Updated manpage
+  * Fix FTBFS, due to missing linkage with zlib (00-fix_build.patch)
+  * Remove 'gazetteer' from the packaged examples. It has become quite huge
+    (90M unpacked), and I suppose not much people need it. It might become
+    a separate binary package in future, though.
+    Also remove it from the "orig" tarball. I'll reintroduce it as soon
+    as someone actually asks for it.
+  * Don't actually build gazetteer (01-disable_gazetteer.patch)
+
+ -- David Paleino <dapal@debian.org>  Tue, 18 Jan 2011 22:13:02 +0100
+
+osm2pgsql (0.69+r20104-2) unstable; urgency=low
+
+  [ Francesco Paolo Lovergine ]
+  * Changed debian/rules to autodetect latest svn revision and upstream version.
+  * Now recommends both postgis and last available postgresql-postgis revision.
+    (closes: #559604)
+  * Fixed previous changelog for repeated logs.
+
+  [ David Paleino ]
+  * debian/control:
+    - fix Vcs-* fields to point to trunk only.
+    - added myself to Uploaders
+
+ -- David Paleino <dapal@debian.org>  Sun, 05 Sep 2010 08:38:52 +0200
+
+osm2pgsql (0.69+r20104-1) unstable; urgency=low
+
+  * Added 900913.sql, containing EPSG:900913 for postgis, as example. (Andreas)
+  * New upstream svn snapshot as taken from upstream svn. Now using svn release
+    number instead of date to identify better the relevant snapshot.
+  * Patch 01_style_location merged upstream.
+  * Added Vcs-* fields to debian/control.
+  * Policy bumped to 3.8.4 without changes.
+  * Added a new set of examples (gazetteer and other scripts).
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Mon, 22 Feb 2010 10:43:12 +0100
+
+osm2pgsql (0.66.20090526-1) unstable; urgency=low
+
+  * New upstream svn snapshot. (Closes: #532145)
+  * Removed 10-missing-includes patch, fixed upstream.
+  * Updated long description, mostly taken from osm2pgsql.spec.in.
+  * Updated copyright year of debian packaging.
+  * Added DM-Upload-Allowed to debian/control.
+  * Added 01_style_location patch from Frederik Ramm to reflect
+    path of style files on debian systems.
+  * Use dh_prep instead of dh_clean -k to fix a lintian warning.
+  * Updated manpage.
+
+ -- Andreas Putzo <andreas@putzo.net>  Mon, 08 Jun 2009 21:44:57 +0000
+
+osm2pgsql (0.52.20080408-3) unstable; urgency=high
+
+  * Updated build-dep: proj -> libproj-dev.
+  * Added Homepage field.
+  * Added me as uploader.
+  * Policy bumped to 3.8.1.
+  * Debhelper compatibility moved to 7.
+  * Now recommends postgis 8.3 extension. 
+  * Added me as uploader.
+
+ -- Francesco Paolo Lovergine <frankie@debian.org>  Tue, 26 May 2009 15:43:48 +0200
+
+osm2pgsql (0.52.20080408-2) unstable; urgency=low
+
+  * Added 10-missing-includes.dpatch to actually build with
+    gcc-4.3. Thanks Chris Lamb for the patch. (Closes: #475692)
+  * Added dpatch to Build-Depends in debian/control.
+    Added patch targets to debian/rules.
+  * Added a get-orig-source target to debian/rules to fetch upstream
+    source from svn repository.
+  * Bumped debhelper compatibility level to 5.
+
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Andreas Putzo <andreas@putzo.net>  Sat, 12 Apr 2008 23:27:12 +0000
+
+osm2pgsql (0.52.20080408-1) unstable; urgency=low
+
+  * New upstream snapshot. (Closes: #474846)
+  * Adopt rename of readme.txt in debian/docs.
+  * Update manual page from usage output. (Closes: #468767)
+  * Add license and copyright of added file sprompt.c to debian/copyright.
+
+  * Upload sponsored by Petter Reinholdtsen.
+
+ -- Andreas Putzo <andreas@putzo.net>  Fri, 11 Apr 2008 22:43:08 +0000
+
+osm2pgsql (0.50.20071211-1) unstable; urgency=low
+
+  * New upstream snapshot
+    - Missing includes added (FTBS with gcc-4.3) (Closes: #454849)
+  * Bumped Standards-Version to 3.7.3
+
+ -- Andreas Putzo <andreas@putzo.net>  Tue, 11 Dec 2007 19:18:26 +0000
+
+osm2pgsql (0.08.20071007-1) unstable; urgency=low
+
+  * Initial release (Closes: #444705)
+
+ -- Andreas Putzo <andreas@putzo.net>  Sun, 07 Oct 2007 13:41:33 +0000
+
