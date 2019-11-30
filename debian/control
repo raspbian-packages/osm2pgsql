@@ -1,0 +1,38 @@
+Source: osm2pgsql
+Maintainer: Debian GIS Project <pkg-grass-devel@lists.alioth.debian.org>
+Uploaders: Francesco Paolo Lovergine <frankie@debian.org>,
+           David Paleino <dapal@debian.org>,
+           Andreas Tille <tille@debian.org>,
+           Bas Couwenberg <sebastic@debian.org>
+Section: utils
+Priority: optional
+Build-Depends: debhelper (>= 9),
+               cmake,
+               libboost-dev,
+               libboost-system-dev,
+               libboost-filesystem-dev,
+               libbz2-dev,
+               libexpat1-dev,
+               libosmium2-dev (>= 2.15.4),
+               libpq-dev,
+               libproj-dev,
+               zlib1g-dev,
+               liblua5.2-dev,
+               lua5.2,
+               python3,
+               python3-psycopg2
+Standards-Version: 4.4.1
+Vcs-Browser: https://salsa.debian.org/debian-gis-team/osm2pgsql
+Vcs-Git: https://salsa.debian.org/debian-gis-team/osm2pgsql.git
+Homepage: https://wiki.openstreetmap.org/wiki/Osm2pgsql
+
+Package: osm2pgsql
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Recommends: postgis
+Description: OpenStreetMap data to PostgreSQL converter
+ Convert OSM planet snapshot data to SQL suitable for loading
+ into a PostgreSQL database with PostGIS geospatial extensions. This
+ database may then be used to render maps with Mapnik or for other
+ geospatial analysis.
