@@ -1,0 +1,31 @@
+Description: Bugfix: Disable expire in flex output when not used
+ If we don't have expire enabled we never need to create an expire list.
+ But as a side effect of the two-stage processing we created such a list
+ which costs a lot of time and RAM. This commit disables this which
+ speeds up processing considerably.
+Author: Jochen Topf <jochen@topf.org>
+Origin: https://github.com/openstreetmap/osm2pgsql/issues/1436
+Bug: https://github.com/openstreetmap/osm2pgsql/issues/1436
+
+--- a/src/expire-tiles.hpp
++++ b/src/expire-tiles.hpp
+@@ -60,6 +60,8 @@ struct expire_tiles
+     expire_tiles(uint32_t maxzoom, double maxbbox,
+                  const std::shared_ptr<reprojection> &projection);
+ 
++    bool enabled() const noexcept { return maxzoom != 0; }
++
+     int from_bbox(double min_lon, double min_lat, double max_lon,
+                   double max_lat);
+     void from_wkb(char const *wkb, osmid_t osm_id);
+--- a/src/output-flex.cpp
++++ b/src/output-flex.cpp
+@@ -1289,7 +1289,7 @@ void output_flex_t::delete_from_table(ta
+     assert(table_connection);
+     auto const id = table_connection->table().map_id(type, osm_id);
+ 
+-    if (table_connection->table().has_geom_column()) {
++    if (m_expire.enabled() && table_connection->table().has_geom_column()) {
+         auto const result = table_connection->get_geom_by_id(type, id);
+ 
+         if (result.num_tuples() == 0) {
