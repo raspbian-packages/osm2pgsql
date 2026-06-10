@@ -1,0 +1,51 @@
+#ifndef OSM2PGSQL_EXPIRE_CONFIG_HPP
+#define OSM2PGSQL_EXPIRE_CONFIG_HPP
+
+/**
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ *
+ * This file is part of osm2pgsql (https://osm2pgsql.org/).
+ *
+ * Copyright (C) 2006-2026 by the osm2pgsql developer community.
+ * For a full list of authors see the git log.
+ */
+
+#include <cstdint>
+#include <cstdlib>
+
+enum class expire_mode : uint8_t
+{
+    full_area,     // Expire all tiles covered by polygon.
+    boundary_only, // Expire only tiles covered by polygon boundary.
+    hybrid // "full_area" or "boundary_only" mode depending on full_area_limit.
+};
+
+/**
+ * These are the options used for tile expiry calculations.
+ */
+struct expire_config_t
+{
+    /**
+     * The id of the expire output to which expired tiles are written.
+     * Only used in the flex output.
+     */
+    std::size_t expire_output = 0;
+
+    /// Buffer around expired feature as fraction of the tile size.
+    double buffer = 0.1;
+
+    /**
+     * Maximum width/heigth of bbox of a (multi)polygon before hybrid mode
+     * expiry switches from full-area to boundary-only expire.
+     */
+    double full_area_limit = 0.0;
+
+    /// Expire mode.
+    expire_mode mode = expire_mode::full_area;
+
+    /// Do expire based on symmetric difference of old and new geometry
+    bool diff_expire = false;
+
+}; // struct expire_config_t
+
+#endif // OSM2PGSQL_EXPIRE_CONFIG_HPP

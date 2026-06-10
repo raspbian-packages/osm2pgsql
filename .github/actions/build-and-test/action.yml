@@ -1,0 +1,29 @@
+name: Build and test osm2pgsql
+
+inputs:
+  test-wrapper:
+    description: 'Wrapper to use around tests'
+    required: false
+    default: pg_virtualenv
+
+runs:
+    using: composite
+
+    steps:
+      - name: build
+        run: make -j3 all man
+        shell: bash
+        working-directory: build
+
+      - name: test
+        run: |
+          if [ "$WRAPPER" = "pg_virtualenv" ]; then
+            pg_virtualenv -v $POSTGRESQL_VERSION ctest --output-on-failure
+          else
+            $WRAPPER ctest --output-on-failure
+          fi
+        shell: bash
+        working-directory: build
+        env:
+          WRAPPER: ${{ inputs.test-wrapper }}
+
